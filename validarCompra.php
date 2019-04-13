@@ -1,7 +1,7 @@
 <?php 
     include "inc/head.php";
     include "inc/header.php";
-    require "inc/funcoes.php"; // Verifica se tem algum erro no arquivo funções, se tiver algum erro, ele para.
+    require "req/funcoesValidacao.php"; // Verifica se tem algum erro no arquivo funções, se tiver algum erro, ele para.
 
     // Variáveis
     $nome = $_REQUEST["nomeCompleto"];
