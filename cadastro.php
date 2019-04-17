@@ -4,10 +4,20 @@
 
     // Validando se o formulário foi enviado
     if ($_REQUEST) {
+        var_dump($_REQUEST);
         $nome = $_REQUEST["nome"]; // Outra opção: $_POST["nome];
         $email = $_REQUEST["email"];
         $senha = $_REQUEST["senha"];
         $confirmarSenha = $_REQUEST["confirmarSenha"];
+        // Teste
+        $hash = password_hash($senha, PASSWORD_DEFAULT);
+
+        // Testes md5
+        //$cadastro = md5($senha);
+        //$login = md5($senha);
+        //echo $cadastro . "<br>"; // Compara o que foi cadastrado com o login
+        //echo $login;
+        //exit;
 
         // Imprimir na tela as informações do cadastro
         //echo $nome . " " . $email . " " . $senha . " " . $confirmarSenha;
@@ -15,15 +25,18 @@
 
         // verifica se a senha é igual ao confirmar senha
         if ($senha == $confirmarSenha) {
+            // Criptografando a senha
+            $senhaCrip = password_hash($senha, PASSWORD_DEFAULT);
             // Criando um novo usuário (o banco de dados com as informações do cadastro)
             $novoUsuario = [
                 "nome" => $nome,
                 "email" => $email,
-                "senha" => $senha,
+                "senha" => $senhaCrip,
             ];
 
             // cadastro meu usuário no json
             $cadastrou = cadastrarUsuario($novoUsuario);
+            echo $cadastrou;
         } else {
             $erro = "Senhas incompatíveis";
         }
