@@ -4,7 +4,6 @@
 
     // Validando se o formulário foi enviado
     if ($_REQUEST) {
-        var_dump($_REQUEST);
         $nome = $_REQUEST["nome"]; // Outra opção: $_POST["nome];
         $email = $_REQUEST["email"];
         $senha = $_REQUEST["senha"];
@@ -36,7 +35,6 @@
 
             // cadastro meu usuário no json
             $cadastrou = cadastrarUsuario($novoUsuario);
-            echo $cadastrou;
         } else {
             $erro = "Senhas incompatíveis";
         }

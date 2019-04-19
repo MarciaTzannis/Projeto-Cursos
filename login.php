@@ -8,9 +8,19 @@
         $email = $_REQUEST["email"];
         $senha = $_REQUEST["senha"];
         // verificando se o usuário está logado através da função
-        $estaLogado = logarUsuario($email, $senha);
+        $nomeLogado = logarUsuario($email, $senha);
 
-        if ($estaLogado == true) {
+        if ($nomeLogado == true) {
+            // criando a sessão quando ele está logado
+            session_start();
+            // criando o campo nome na sessão
+            $_SESSION["nome"] = $nomeLogado;
+            // criando o campo email na sessão
+            $_SESSION["email"] = $email;
+            // criando o campo nivelAcesso
+            $_SESSION["nivelAcesso"] = mt_rand(0, 1);
+            // criando o campo logado na sessão
+            $_SESSION["logado"] = true;
             // a função header direciona para uma página, no caso, para o index.php
             header("Location: index.php");
         // se ele não está logado
