@@ -1,43 +1,58 @@
 <?php
     include "inc/head.php";
     include "inc/header.php";
+    include "req/database.php";
+
+    try {
+        $conexao  = new PDO($dsn, $db_user, $db_pass); // Abre a conexão
+
+        $query  = $conexao->query('SELECT * FROM cursos'); // Consulta o banco de dados
+
+        $cursos = $query->fetchAll(PDO::FETCH_ASSOC); // Traz todas as linhas em array associativo
+        // var_dump($cursos);
+
+    } catch ( PDOException $Exception ) {
+        echo $Exception->getMessage();
+    }
+
 
     // Array Associativo
-    $cursos = [
-        "Full Stack" => ["Curso de desenvolvimento web", 1000.99, "full.jpeg", "fullstack"],
-        "Marketing Digital" => ["Curso de Marketing", 1000.98, "marketing.jpg", "marketing"],
-        "UX" => ["Curso de User Experience", 9000.98, "ux.png", "ux"],
-        "Mobile Android" => ["Curso de apps", 1000.97, "android.jpeg", "android"],
-    ];
+    // $cursos = [
+    //    "Full Stack" => ["Curso de desenvolvimento web", 1000.99, "full.jpeg", "fullstack"],
+    //    "Marketing Digital" => ["Curso de Marketing", 1000.98, "marketing.jpg", "marketing"],
+    //    "UX" => ["Curso de User Experience", 9000.98, "ux.png", "ux"],
+    //    "Mobile Android" => ["Curso de apps", 1000.97, "android.jpeg", "android"],
+    // ];
 ?>
 
 
-    
+
 
     <div class="container">
         <div class="row">
             <!-- Para criar cursos -->
-            <?php foreach ($cursos as $nomeCurso => $infoCurso) : ?>
+            <?php foreach ($cursos as $key => $infoCurso) : ?>
             <div class="col-sm-6 col-md-6">
                 <div class="thumbnail">
                     <!-- imagem curso -->
-                    <img src="<?php echo "assets/img/$infoCurso[2]"; ?>" alt="<?php echo "Foto curso $nomeCurso"; ?>">
+                    <img src="assets/img/<?php echo $infoCurso['image']; ?>" alt="Foto curso <?php echo $infoCurso['nome']; ?>">
                     <div class="caption">
-                        <h3><?php echo $nomeCurso; ?></h3>
+                        <h3><?php echo $infoCurso['nome']; ?></h3>
                         <!-- descrição curso -->
-                        <p><?php echo $infoCurso[0]; ?></p>
+                        <p><?php echo $infoCurso['descricao']; ?></p>
                         <!-- valor curso -->
-                        <p><?php echo $infoCurso[1]; ?></p>
-                        <a href="#" class="btn btn-info" data-toggle="modal" data-target="<?php echo "#$infoCurso[3]" ?>" role="button">Comprar</a>
+                        <p>R$ <?php echo $infoCurso['preco']; ?></p>
+                        <a href="#" class="btn btn-info" data-toggle="modal" data-target="#<?php echo $infoCurso['tag']; ?>" role="button">Comprar</a>
                     </div>
                 </div>
             </div>
             <?php endforeach; ?>
 
-            <?php foreach ($cursos as $nomeCurso => $infoCurso) : ?>
+            <?php foreach ($cursos as $key => $infoCurso) : ?>
             <!-- Modal -->
-            <div class="modal fade" id="<?php echo $infoCurso[3]; ?>" role="dialog">
+            <div class="modal fade" id="<?php echo $infoCurso['tag']; ?>" role="dialog">
                 <div class="modal-dialog">
+
 
                     <!-- Modal content-->
                     <div class="modal-content">
@@ -46,8 +61,8 @@
                             <h4 class="modal-title">Preencha os seus dados</h4>
                         </div>
                         <div class="modal-body">
-                            <h4> Curso de: <?php echo $nomeCurso ?> </h4>
-                            <h4> Preço R$ <?php echo $infoCurso[1]; ?> </h4>
+                            <h4> Curso de: <?php echo $infoCurso['nome']; ?> </h4>
+                            <h4> Preço R$ <?php echo $infoCurso['preco']; ?> </h4>
                             <form action="validarCompra.php" method="post">
                                 <!-- input hidden para esconder valores-->
                                 <input type="hidden" name="nomeCurso" value="<?php echo $nomeCurso; ?>"> 
