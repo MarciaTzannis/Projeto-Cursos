@@ -4,6 +4,20 @@
     include "inc/head.php";
     include "inc/header.php";
 
+    // Fazer o select de professores dinâmico
+    try { 
+        global $conexao;
+        
+        $query = $conexao->query("SELECT * FROM usuarios WHERE tipo_usuario_fk = 2;");
+
+        // Criar a variável professor
+        $professores = $query->fetchAll(PDO::FETCH_ASSOC);
+        
+
+    } catch( PDOException $Exception) {
+        echo $Exception->getMessage();
+    }
+
 
     if($_POST) {
         $nome = $_POST['nome'];
@@ -74,7 +88,13 @@
             <label for="professor">Professor</label>
             <select name="professor" class="form-control" id="professor">
                 <option disabled selected>Selecione um professor</option>
-                <option value="1">Thomaz</option>
+                <?php
+                    if(isset($professores)) {
+                        foreach ($professores as $professor) {
+                            echo "<option value='". $professor['id_usuario'] ."'>". $professor['nome'] ."</option>";
+                        }
+                    } 
+                ?>
             </select>
         </div>
         <div class="col-xs-12">
