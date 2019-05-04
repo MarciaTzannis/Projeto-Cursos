@@ -4,7 +4,7 @@
     include "inc/head.php";
 
     // Verifica se o usuário enviou o formulário ou não
-    if ($_REQUEST) {
+    if (isset ($_REQUEST['email']) && $_REQUEST['email']) {
         // pegando os valores dos inputs
         $email = $_REQUEST["email"];
         $senha = $_REQUEST["senha"];

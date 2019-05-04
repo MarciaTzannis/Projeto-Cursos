@@ -34,8 +34,7 @@
         <div class="col-sm-6 col-md-6">
             <div class="thumbnail">
                 <!-- imagem curso -->
-                <img src="assets/img/<?php echo $infoCurso['image']; ?>"
-                    alt="Foto curso <?php echo $infoCurso['nome']; ?>">
+                <img src="<?php echo $infoCurso['image']; ?>" alt="Foto curso <?php echo $infoCurso['nome']; ?>">
                 <div class="caption">
                     <h3><?php echo $infoCurso['nome']; ?></h3>
                     <!-- descrição curso -->
